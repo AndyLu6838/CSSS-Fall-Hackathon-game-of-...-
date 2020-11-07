@@ -234,6 +234,14 @@ void copyGrid (bool gridOne[gridSize+1][gridSize+1], bool gridTwo[gridSize+1][gr
 	}
 }
 
+/* 
+param:  two integers, a and b
+return: a mod b, should work with negatives
+*/
+int mod2(int a, int b){
+    return (b + (a%b)) % b;
+} 
+
 /*
 param:  gridOne, the boolean grid with the alive (true) and dead (false) cells  
         i, the integer index of the row of gridOne
@@ -245,15 +253,21 @@ int liveNeighbours (bool gridOne[gridSize][gridSize], int i, int j){
     // count all trues from grid[i-1][j-1] to grid[i+1][j+1]
     int count = 0;
     
-    // avoid accessing negative indices or indices past gridSize
-    int lower_bound_cols = max(0, i-1);
-    int upper_bound_cols = min(gridSize-1, i+1);
-    int lower_bound_rows = max(0, j-1);
-    int upper_bound_rows = min(gridSize-1, j+1);
+    // can change these bounds depending on 
+    // how many neighbours you want to consider
+    int lower_bound_cols = i-1;
+    int upper_bound_cols = i+1;
+    int lower_bound_rows = j-1;
+    int upper_bound_rows = j+1;
 
     for (int a = lower_bound_cols; a <= upper_bound_cols; a++){
         for (int b = lower_bound_rows; b <= upper_bound_rows; b++){
-            if (gridOne[a][b] == true && (a != i || b != j)){
+            // basically calculates the mod of the index
+            // if an index is out of bounds, the mod2 will bring it into bounds,
+            // but put it on the opposite side, eg. mod2(-1, 25) = 24
+            // lets the cells wrap around the array ("toroidal array")
+            if (gridOne[mod2(a, gridSize)][mod2(b, gridSize)] == true && 
+                    (mod2(a, gridSize) != i || mod2(b, gridSize) != j)){
                 count++;
             }
         }
