@@ -6,14 +6,16 @@
 
 `git clone https://github.com/ryan-lintott/CSSS-Fall-Hackathon-game-of-...-.git`
 
-`cd CSSS-Fall-Hackathon-game-of-...-/`
+then go to direcvtory containing the file and run
 
-`gcc GameOfLife.cpp -lstdc++`
+`gcc GameOfLife.cpp -lstdc++` to compile and
 
-`/a.out`
+`/a.out` to start the game
 
 #### Windows
 
 `git clone https://github.com/ryan-lintott/CSSS-Fall-Hackathon-game-of-...-.git`
 
-`cl /EHsc GameOfLife.cpp`
+then go to direcvtory containing the file and run
+
+`cl /EHsc GameOfLife.cpp` to compile and
