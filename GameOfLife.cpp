@@ -213,11 +213,11 @@ void printGrid(bool gridOne[gridSize+1][gridSize+1])
     {
       if (GridOne[i][x]==true)
       {
-        cout << "o"
+        cout << "o";
       }
       else
       {
-        cout << "."
+        cout << ".";
       }
     }
   }
