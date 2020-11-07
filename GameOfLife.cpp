@@ -50,7 +50,7 @@ void clearScreen(void);
 int main(){
 
     // system( "color A" );//LGT green
-    cout << COLOR_GREEN;
+    cout << COLOR_RED;
     clearScreen();
     bool gridOne[gridSize+1][gridSize+1] = {};
     int x,y,n;
