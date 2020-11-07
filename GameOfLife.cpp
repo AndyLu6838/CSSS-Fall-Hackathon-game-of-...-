@@ -123,7 +123,7 @@ int main(){
         		while (ss.get(cell)) {
 
 			  if( cell == 'o' ) {
-			    cout << "adding cell to coord " << xCoord << ", " << yCoord << "!" << endl;
+			    cout << "adding live cell to coord " << xCoord << ", " << yCoord << "!" << endl;
 			    gridOne[xCoord][yCoord] = true;
 			  }
 			  if( cell == ' ') {
