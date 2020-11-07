@@ -89,6 +89,24 @@ int main(){
 	    
 	    cout << "Enter name of file to read from: "<<endl;
 	    cin  >> filename;
+		
+		/*
+		TODO: another potential improvement, right now the input file just specifies coordinates for the cells like
+			5 4
+			7 4
+			5 5
+			6 5
+			5 6
+
+		might be cooler for the input to be like
+			. . . . . 
+			. o . . . 
+			. o . . o
+			o . o . .
+			o o . . o
+
+		instead	
+		*/
 	    
 	    ifstream readfile(filename);
 	    if ( readfile.is_open() )
