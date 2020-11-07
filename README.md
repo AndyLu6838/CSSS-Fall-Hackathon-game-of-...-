@@ -10,4 +10,6 @@
 
 `gcc GameOfLife.cpp -lstdc++`
 
+`/a.out`
+
 #### Windows
