@@ -200,10 +200,70 @@ void printGrid(bool gridOne[gridSize+1][gridSize+1]){
 	// TODO
 }
 
-void compareGrid (bool gridOne[gridSize+1][gridSize+1], bool gridTwo[gridSize+1][gridSize+1]){
+void copyGrid (bool gridOne[gridSize+1][gridSize+1], bool gridTwo[gridSize+1][gridSize+1]){
 	// TODO
 }
 
-void determineState(bool gridOne[gridSize+1][gridSize+1]){
-	// TODO
+/*
+param:  gridOne, the boolean grid with the alive (true) and dead (false) cells  
+        i, the integer index of the row of gridOne
+        j, the integer index of the column of gridOne
+return: the number of adjacent cells (including diagonal) to gridOne[i][j]
+        that are alive (true).
+*/
+int liveNeighbours (bool gridOne[gridSize+1][gridSize+1], int i, int j){
+    // count all trues from grid[i-1][j-1] to grid[i+1][j+1]
+    int count = 0;
+    
+    // avoid accessing negative indices or indices past gridSize
+    int lower_bound_cols = max(1, i-1);
+    int upper_bound_cols = min(gridSize-1, i+1);
+    int lower_bound_rows = max(1, j-1);
+    int upper_bound_rows = min(gridSize-1, j+1);
+
+    for (int a = lower_bound_cols; a <= upper_bound_cols; a++){
+        for (int b = lower_bound_rows; b <= upper_bound_rows; b++){
+            if (gridOne[a][b] == true && (a != i || b != j)){
+                count++;
+            }
+        }
+    }
+    return count;
 }
+
+/*
+param:  gridOne, the boolean grid with the alive (true) and dead (false) cells 
+return: void, but modifies gridOne with trues and falses to simulate an iteration
+*/
+void determineState(bool gridOne[gridSize+1][gridSize+1]){
+    bool gridCopy[gridSize+1][gridSize+1];
+
+    // make an unchanged copy of gridOne so changes made to gridOne
+    // won't affect liveNeighbours
+    copyGrid(gridOne, gridCopy);
+
+    for (int i = 1; i < gridSize; i++){
+        for (int j = 1; j < gridSize; j++){
+            int alive = liveNeighbours(gridCopy, i, j);
+
+            // TODO: Make it so that these rules can be changed
+            /* Rules:
+            Any cell with less than 2 live neighbours dies.
+            Any cell with more than 3 live neighbours dies.
+            Any cell with 2-3 live neighbours stays unchanged.
+            Any cell with 3 live neighbours is alive.
+            */
+
+            if (alive < 2){
+                gridOne[i][j] = false;
+            }
+            else if (alive > 3){
+                gridOne[i][j] = false;
+            }
+            else if (alive == 3){
+                gridOne[i][j] = true;
+            }
+        }
+    }
+}
+
