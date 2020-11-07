@@ -126,7 +126,7 @@ int main(){
       }
     cout << "Grid setup is done. Start the game ? (y/n)" << endl;
 	
-	// TODO: let the player configure options
+	// TODO: let the player configure game parameters (that's what makes it the Game of ... rather than the Game of Life
 	
     printGrid(gridOne);
     cin >> start;
