@@ -13,3 +13,7 @@
 `/a.out`
 
 #### Windows
+
+`git clone https://github.com/ryan-lintott/CSSS-Fall-Hackathon-game-of-...-.git`
+
+`cl /EHsc GameOfLife.cpp`
