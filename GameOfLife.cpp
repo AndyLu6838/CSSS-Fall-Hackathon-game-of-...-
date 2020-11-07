@@ -201,7 +201,13 @@ void printGrid(bool gridOne[gridSize+1][gridSize+1]){
 }
 
 void copyGrid (bool gridOne[gridSize+1][gridSize+1], bool gridTwo[gridSize+1][gridSize+1]){
-	// TODO
+	for(int i=0; i<gridSize+1; i++) //row
+	{
+		for(int j=0; j<gridSize+1; j++)//column
+		{
+			gridTwo[gridSize+1][gridSize+1]=gridOne[gridSize+1][gridSize+1];
+		}
+	}
 }
 
 /*
