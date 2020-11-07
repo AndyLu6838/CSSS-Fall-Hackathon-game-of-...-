@@ -205,8 +205,22 @@ void clearScreen(void) {
 }
 
 
-void printGrid(bool gridOne[gridSize+1][gridSize+1]){
-	// TODO
+void printGrid(bool gridOne[gridSize+1][gridSize+1])
+{
+  for (int i=0; i < gridSize; i++)
+  {
+    for (int x=0; x<gridSize; x++)
+    {
+      if (GridOne[i][x]==true)
+      {
+        cout << "o"
+      }
+      else
+      {
+        cout << "."
+      }
+    }
+  }
 }
 
 void copyGrid (bool gridOne[gridSize+1][gridSize+1], bool gridTwo[gridSize+1][gridSize+1]){
