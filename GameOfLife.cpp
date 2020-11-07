@@ -111,19 +111,28 @@ int main(){
 	    ifstream readfile(filename);
 	    if ( readfile.is_open() )
 	      {
-		string fileline,xx,yy;
+		string fileline;
+    		int yCoord = 0;
 
 		while (getline(readfile,fileline))
 		  {
-		    stringstream ss(fileline);
-		    
-		    getline(ss,xx,' ');
-		    getline(ss,yy,' ');
+		   	stringstream ss(fileline);	    
+        		int xCoord = 0;
+        		char cell;
 
-		    x = stoi(xx);
-		    y = stoi(yy);
+        		while (ss.get(cell)) {
 
-		    gridOne[x][y] = true;
+			  if( cell == 'o' ) {
+			    cout << "adding cell to coord " << xCoord << ", " << yCoord << "!" << endl;
+			    gridOne[xCoord][yCoord] = true;
+			  }
+			  if( cell == ' ') {
+			    // don't count spaces
+			    continue;
+			  }
+			  xCoord++;
+			}
+			yCoord++;
 		  }
 		break;
 	      } else {
