@@ -14,6 +14,8 @@ then go to direcvtory containing the file and run
 
 #### Windows
 
+Make a directory for your project, go into the directory from your command line and run
+
 `git clone https://github.com/ryan-lintott/CSSS-Fall-Hackathon-game-of-...-.git`
 
 then go to direcvtory containing the file and run
