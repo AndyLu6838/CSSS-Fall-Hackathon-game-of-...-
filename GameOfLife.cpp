@@ -213,13 +213,14 @@ void printGrid(bool gridOne[gridSize+1][gridSize+1])
     {
       if (GridOne[i][x]==true)
       {
-        cout << "o";
+        cout << "o ";
       }
       else
       {
-        cout << ".";
+        cout << ". ";
       }
     }
+    cout << endl;
   }
 }
 
@@ -228,7 +229,7 @@ void copyGrid (bool gridOne[gridSize+1][gridSize+1], bool gridTwo[gridSize+1][gr
 	{
 		for(int j=0; j<gridSize+1; j++)//column
 		{
-			gridTwo[gridSize+1][gridSize+1]=gridOne[gridSize+1][gridSize+1];
+			gridTwo[i][j] = gridOne[i][j];
 		}
 	}
 }
