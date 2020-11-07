@@ -241,14 +241,14 @@ param:  gridOne, the boolean grid with the alive (true) and dead (false) cells
 return: the number of adjacent cells (including diagonal) to gridOne[i][j]
         that are alive (true).
 */
-int liveNeighbours (bool gridOne[gridSize+1][gridSize+1], int i, int j){
+int liveNeighbours (bool gridOne[gridSize][gridSize], int i, int j){
     // count all trues from grid[i-1][j-1] to grid[i+1][j+1]
     int count = 0;
     
     // avoid accessing negative indices or indices past gridSize
-    int lower_bound_cols = max(1, i-1);
+    int lower_bound_cols = max(0, i-1);
     int upper_bound_cols = min(gridSize-1, i+1);
-    int lower_bound_rows = max(1, j-1);
+    int lower_bound_rows = max(0, j-1);
     int upper_bound_rows = min(gridSize-1, j+1);
 
     for (int a = lower_bound_cols; a <= upper_bound_cols; a++){
@@ -265,15 +265,15 @@ int liveNeighbours (bool gridOne[gridSize+1][gridSize+1], int i, int j){
 param:  gridOne, the boolean grid with the alive (true) and dead (false) cells 
 return: void, but modifies gridOne with trues and falses to simulate an iteration
 */
-void determineState(bool gridOne[gridSize+1][gridSize+1]){
-    bool gridCopy[gridSize+1][gridSize+1];
+void determineState(bool gridOne[gridSize][gridSize]){
+    bool gridCopy[gridSize][gridSize];
 
     // make an unchanged copy of gridOne so changes made to gridOne
     // won't affect liveNeighbours
     copyGrid(gridOne, gridCopy);
 
-    for (int i = 1; i < gridSize; i++){
-        for (int j = 1; j < gridSize; j++){
+    for (int i = 0; i < gridSize; i++){
+        for (int j = 0; j < gridSize; j++){
             int alive = liveNeighbours(gridCopy, i, j);
 
             // TODO: Make it so that these rules can be changed
