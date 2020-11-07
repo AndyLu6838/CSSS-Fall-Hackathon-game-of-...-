@@ -20,4 +20,4 @@ Make a directory for your project, go into the directory from your command line 
 
 then go to direcvtory containing the file and run
 
-`cl /EHsc GameOfLife.cpp` to compile and
+~~`cl /EHsc GameOfLife.cpp` to compile and~~
