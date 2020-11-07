@@ -57,7 +57,8 @@ int main(){
     string nc;
     string start;
     string filename;
-    cout << "                         THE GAME OF life - Implementation in C++" << endl;
+    cout << "                        CSSS FALL HACKATHON - THE GAME OF ... - Implementation in C++" << endl;
+	 // TODO:  write introduction and get rid of this one
     cout << endl;
     cout << endl;
     cout << endl;
