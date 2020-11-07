@@ -211,7 +211,7 @@ void printGrid(bool gridOne[gridSize+1][gridSize+1])
   {
     for (int x=0; x<gridSize; x++)
     {
-      if (GridOne[i][x]==true)
+      if (gridOne[i][x]==true)
       {
         cout << "o ";
       }
