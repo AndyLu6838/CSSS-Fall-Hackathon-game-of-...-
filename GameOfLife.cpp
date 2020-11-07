@@ -42,8 +42,8 @@
 using namespace std;
 
 const int gridSize = 25;
-void printGrid(bool gridOne[gridSize+1][gridSize+1]);
-void determineState(bool gridOne[gridSize+1][gridSize+1]);
+void printGrid(bool gridOne[gridSize][gridSize]);
+void determineState(bool gridOne[gridSize][gridSize]);
 void clearScreen(void);
 
 
@@ -52,7 +52,7 @@ int main(){
     // system( "color A" );//LGT green
     cout << COLOR_RED;
     clearScreen();
-    bool gridOne[gridSize+1][gridSize+1] = {};
+    bool gridOne[gridSize][gridSize] = {};
     int x,y,n;
     string nc;
     string start;
@@ -205,11 +205,11 @@ void clearScreen(void) {
 }
 
 
-void printGrid(bool gridOne[gridSize+1][gridSize+1])
+void printGrid(bool gridOne[gridSize][gridSize])
 {
   for (int i=0; i < gridSize; i++)
   {
-    for (int x=0; x<gridSize; x++)
+    for (int x=0; x < gridSize; x++)
     {
       if (gridOne[i][x]==true)
       {
@@ -224,10 +224,10 @@ void printGrid(bool gridOne[gridSize+1][gridSize+1])
   }
 }
 
-void copyGrid (bool gridOne[gridSize+1][gridSize+1], bool gridTwo[gridSize+1][gridSize+1]){
-	for(int i=0; i<gridSize+1; i++) //row
+void copyGrid (bool gridOne[gridSize][gridSize], bool gridTwo[gridSize][gridSize]){
+	for(int i=0; i<gridSize; i++) //row
 	{
-		for(int j=0; j<gridSize+1; j++)//column
+		for(int j=0; j<gridSize; j++)//column
 		{
 			gridTwo[i][j] = gridOne[i][j];
 		}
