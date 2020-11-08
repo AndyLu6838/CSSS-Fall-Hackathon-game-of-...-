@@ -79,7 +79,7 @@ int main(){
     cout << "III. Any living cell which has more than three live neighbours dies. Too many friends could be bad for their health too." << endl;
     cout << "IV. Any dead cell with exactly three live neighbours becomes a live cell. Ooh they are resurrected from their death!" << endl;
     cout << endl;
-    cout << "Now this is just the default setting for this game. But if you want to be one of the cool kids and set your own number of alive and dead "friends/neighbours" a cell needs to die or regenerate, you are very much welcome to do so!"<<endl;
+    cout << "Now this is just the default setting for this game. But if you want to be one of the cool kids and set your own number of alive and dead 'friends/neighbours' a cell needs to die or regenerate, you are very much welcome to do so!"<<endl;
     cout << "Life and death are represented in this game by the symbols: << endl;
     cout << "O - living cell" << endl;
     cout << ". - dead cell" << endl;
