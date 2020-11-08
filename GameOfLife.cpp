@@ -43,7 +43,7 @@ using namespace std;
 
 const int gridSize = 25;
 void printGrid(bool gridOne[gridSize][gridSize]);
-void determineState(bool gridOne[gridSize][gridSize]);
+void determineState(bool gridOne[gridSize][gridSize], int starvationLimit, int overpopulationLimit, int neighbourRadius);
 void clearScreen(void);
 
 
