@@ -6,6 +6,8 @@
 
 *What kind of life will you find?*
 
+*RIP John Conway 1937 - 2020*
+
 **Created For:** Fall 2020 Hackathon by SFU CSSS ( Simon Fraser University Computing Science Student Society)
 
 ### Getting started:
