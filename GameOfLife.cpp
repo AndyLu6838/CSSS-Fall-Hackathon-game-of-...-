@@ -41,9 +41,8 @@
 
 using namespace std;
 
-const int gridSize = 25;
-void printGrid(bool gridOne[gridSize][gridSize]);
-void determineState(bool gridOne[gridSize][gridSize], int starvationLimit, int overpopulationLimit, int optimalPopulation, int neighbourRadius);
+void printGrid(bool** gridOne, int gridRows, int gridCols);
+void determineState(bool** gridOne, int gridRows, int gridCols, int starvationLimit, int overpopulationLimit, int optimalPopulation, int neighbourRadius);
 void clearScreen(void);
 
 
@@ -52,13 +51,15 @@ int main(){
     // system( "color A" );//LGT green
     cout << COLOR_RED;
     clearScreen();
-    bool gridOne[gridSize][gridSize] = {};
     int x,y,n;
+    int gridRows, gridCols;
     string nc;
     string start;
     string filename;
     int starvationLimit, overpopulationLimit, neighbourRadius, optimalPopulation;
     string isCustomRules;
+    string gridRowsStr;
+    string gridColsStr;
     string starvationLimitStr;
     string overpopulationLimitStr;
     string neighbourRadiusStr;
@@ -85,6 +86,33 @@ int main(){
     cout << ". - dead cell" << endl;
     cout << endl;
     cout << endl;
+
+    cout << "Set up grid size. Play with default grid size (25x25)? (y/n)" << endl;
+    cin >> isCustomRules;
+    if (isCustomRules == "y" || isCustomRules == "Y")
+    {
+        gridRows = 25;
+        gridCols = 25;
+    }
+    else
+    {
+        cout << "Enter the number of rows in the grid (integer)" << endl;
+        cin >> gridRowsStr;
+        gridRows = stoi(gridRowsStr);
+
+        cout << "Enter the number of cols in the grid (integer)" << endl;
+        cin >> gridColsStr;
+        gridCols = stoi(gridColsStr);
+    }
+    // remember to deallocate the memory
+    bool** gridOne = new bool *[gridRows];
+    for (int i = 0; i < gridRows; i++){
+        gridOne[i] = new bool[gridCols];
+        for (int j = 0; j < gridCols; j++){
+            gridOne[i][j] = false;
+        }
+    }
+
     cout << "Enter the number of cells, or 'r' to read cells from file: ";
     cin >> nc;
     cout << endl;
@@ -136,7 +164,7 @@ int main(){
             cout <<stoi(nc)<< "Enter the coordinates of cell " << i+1 << " : ";
             cin >> x >> y;
             gridOne[x][y] = true;
-            printGrid(gridOne);
+            printGrid(gridOne, gridRows, gridCols);
           }
       }
   
@@ -172,14 +200,14 @@ int main(){
 	
     cout << "Rule configuration is done. Start the game ? (y/n)" << endl;
 
-    printGrid(gridOne);
+    printGrid(gridOne, gridRows, gridCols);
     cin >> start;
     if( start == "y" || start == "Y" )
       {
         while (true)
 	  {
-            printGrid(gridOne);
-            determineState(gridOne, starvationLimit, overpopulationLimit, optimalPopulation, neighbourRadius);
+            printGrid(gridOne, gridRows, gridCols);
+            determineState(gridOne, gridRows, gridCols, starvationLimit, overpopulationLimit, optimalPopulation, neighbourRadius);
             usleep(200000);
             clearScreen();
 	  }
@@ -189,7 +217,11 @@ int main(){
         cout << COLOR_RESET;
         clearScreen();
         return 0;
-      }   
+      }
+    for (int i = 0; i < gridRows; i++){
+        delete[] gridOne[i];
+    }
+    delete gridOne;    
 }
 
 void clearScreen(void) {
@@ -222,11 +254,11 @@ void clearScreen(void) {
 }
 
 
-void printGrid(bool gridOne[gridSize][gridSize])
+void printGrid(bool** gridOne, int gridRows, int gridCols)
 {
-  for (int i=0; i < gridSize; i++)
+  for (int i=0; i < gridRows; i++)
   {
-    for (int x=0; x < gridSize; x++)
+    for (int x=0; x < gridCols; x++)
     {
       if (gridOne[i][x]==true)
       {
@@ -241,10 +273,10 @@ void printGrid(bool gridOne[gridSize][gridSize])
   }
 }
 
-void copyGrid (bool gridOne[gridSize][gridSize], bool gridTwo[gridSize][gridSize]){
-	for(int i=0; i<gridSize; i++) //row
+void copyGrid (bool** gridOne, bool** gridTwo, int gridRows, int gridCols){
+	for(int i=0; i<gridRows; i++) //row
 	{
-		for(int j=0; j<gridSize; j++)//column
+		for(int j=0; j<gridCols; j++)//column
 		{
 			gridTwo[i][j] = gridOne[i][j];
 		}
@@ -266,7 +298,7 @@ param:  gridOne, the boolean grid with the alive (true) and dead (false) cells
 return: the number of adjacent cells (including diagonal) to gridOne[i][j]
         that are alive (true).
 */
-int liveNeighbours (bool gridOne[gridSize][gridSize], int i, int j, int neighbourRadius){
+int liveNeighbours (bool** gridOne, int gridRows, int gridCols, int i, int j, int neighbourRadius){
     // count all trues from grid[i-1][j-1] to grid[i+1][j+1]
     int count = 0;
     
@@ -283,8 +315,8 @@ int liveNeighbours (bool gridOne[gridSize][gridSize], int i, int j, int neighbou
             // if an index is out of bounds, the mod2 will bring it into bounds,
             // but put it on the opposite side, eg. mod2(-1, 25) = 24
             // lets the cells wrap around the array ("toroidal array")
-            if (gridOne[mod2(a, gridSize)][mod2(b, gridSize)] == true && 
-                    (mod2(a, gridSize) != i || mod2(b, gridSize) != j)){
+            if (gridOne[mod2(a, gridRows)][mod2(b, gridCols)] == true && 
+                    (mod2(a, gridRows) != i || mod2(b, gridCols) != j)){
                 count++;
             }
         }
@@ -296,16 +328,22 @@ int liveNeighbours (bool gridOne[gridSize][gridSize], int i, int j, int neighbou
 param:  gridOne, the boolean grid with the alive (true) and dead (false) cells 
 return: void, but modifies gridOne with trues and falses to simulate an iteration
 */
-void determineState(bool gridOne[gridSize][gridSize], int starvationLimit, int overpopulationLimit, int optimalPopulation, int neighbourRadius) {
-    bool gridCopy[gridSize][gridSize];
+void determineState(bool** gridOne, int gridRows, int gridCols, int starvationLimit, int overpopulationLimit, int optimalPopulation, int neighbourRadius) {
+    bool** gridCopy = new bool*[gridRows];
+    for (int i = 0; i < gridRows; i++){
+        gridCopy[i] = new bool[gridCols];
+        for (int j = 0; j < gridCols; j++){
+            gridCopy[i][j] = false;
+        }
+    }
 
     // make an unchanged copy of gridOne so changes made to gridOne
     // won't affect liveNeighbours
-    copyGrid(gridOne, gridCopy);
+    copyGrid(gridOne, gridCopy, gridRows, gridCols);
 
-    for (int i = 0; i < gridSize; i++){
-        for (int j = 0; j < gridSize; j++){
-            int alive = liveNeighbours(gridCopy, i, j, neighbourRadius);
+    for (int i = 0; i < gridRows; i++){
+        for (int j = 0; j < gridCols; j++){
+            int alive = liveNeighbours(gridCopy, gridRows, gridCols, i, j, neighbourRadius);
 
             // TODO: Make it so that these rules can be changed
             /* Rules:
@@ -326,4 +364,8 @@ void determineState(bool gridOne[gridSize][gridSize], int starvationLimit, int o
             }
         }
     }
+    for (int i = 0; i < gridRows; i++){
+        delete[] gridCopy[i];
+    }
+    delete gridCopy;
 }
