@@ -54,7 +54,6 @@ int main(){
     clearScreen();
     bool gridOne[gridSize][gridSize] = {};
     int x,y,n;
-    int x,y,n;
     int starvationLimit, overpopulationLimit, neighbourRadius;
     string nc;
     string start;
@@ -190,7 +189,7 @@ int main(){
         while (true)
 	  {
             printGrid(gridOne);
-            determineState(gridOne);
+            determineState(gridOne, starvationLimit, overpopulationLimit, neighbourRadius);
             usleep(200000);
             clearScreen();
 	  }
@@ -307,7 +306,7 @@ int liveNeighbours (bool gridOne[gridSize][gridSize], int i, int j){
 param:  gridOne, the boolean grid with the alive (true) and dead (false) cells 
 return: void, but modifies gridOne with trues and falses to simulate an iteration
 */
-void determineState(bool gridOne[gridSize][gridSize]){
+void determineState(bool gridOne[gridSize][gridSize], int starvationLimit, int overpopulationLimit, int neighbourRadius){
     bool gridCopy[gridSize][gridSize];
 
     // make an unchanged copy of gridOne so changes made to gridOne
