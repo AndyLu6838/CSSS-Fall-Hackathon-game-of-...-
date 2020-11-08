@@ -43,7 +43,7 @@ using namespace std;
 
 const int gridSize = 25;
 void printGrid(bool gridOne[gridSize][gridSize]);
-void determineState(bool gridOne[gridSize][gridSize]);
+void determineState(bool gridOne[gridSize][gridSize], int starvationLimit, int overpopulationLimit, int neighbourRadius);
 void clearScreen(void);
 
 
@@ -54,9 +54,15 @@ int main(){
     clearScreen();
     bool gridOne[gridSize][gridSize] = {};
     int x,y,n;
+    int starvationLimit, overpopulationLimit, neighbourRadius;
     string nc;
     string start;
+    string isCustomRules;
+    string starvationLimitStr;
+    string overpopulationLimitStr;
+    string neighbourRadiusStr;
     string filename;
+	
     cout << "                        CSSS FALL HACKATHON - THE GAME OF ... - Implementation in C++" << endl;
 	 // TODO:  write introduction and get rid of this one
     cout << endl;
@@ -150,9 +156,31 @@ int main(){
 	    printGrid(gridOne);
 	  }
       }
-    cout << "Grid setup is done. Start the game ? (y/n)" << endl;
 	
-	// TODO: let the player configure game parameters (that's what makes it the Game of ... rather than the Game of Life
+    cout << "Grid setup is done. Play with the default Game of Life rules? (y/n)" << endl;
+
+    cin >> isCustomRules;
+    if( isCustomRules == "y" || isCustomRules == "Y" )
+      {
+        starvationLimit = 2;
+        overpopulationLimit = 3;
+        neighbourRadius = 1;
+      }
+    else {
+      cout << "Choose starvation limit (integer)" << endl;
+      cin >> starvationLimitStr;
+      starvationLimit = stoi(starvationLimitStr);
+
+      cout << "Choose overpopulation limit (integer)" << endl;
+      cin >> overpopulationLimitStr;
+      overpopulationLimit = stoi(overpopulationLimitStr);
+
+      cout << "Choose neighbour radius (integer)" << endl;
+      cin >> neighbourRadiusStr;
+      neighbourRadius = stoi(neighbourRadiusStr);
+    }
+		
+    cout << "Rule configuration is done. Start the game ? (y/n)" << endl;
 	
     printGrid(gridOne);
     cin >> start;
@@ -161,7 +189,7 @@ int main(){
         while (true)
 	  {
             printGrid(gridOne);
-            determineState(gridOne);
+            determineState(gridOne, starvationLimit, overpopulationLimit, neighbourRadius);
             usleep(200000);
             clearScreen();
 	  }
@@ -278,7 +306,7 @@ int liveNeighbours (bool gridOne[gridSize][gridSize], int i, int j){
 param:  gridOne, the boolean grid with the alive (true) and dead (false) cells 
 return: void, but modifies gridOne with trues and falses to simulate an iteration
 */
-void determineState(bool gridOne[gridSize][gridSize]){
+void determineState(bool gridOne[gridSize][gridSize], int starvationLimit, int overpopulationLimit, int neighbourRadius){
     bool gridCopy[gridSize][gridSize];
 
     // make an unchanged copy of gridOne so changes made to gridOne
