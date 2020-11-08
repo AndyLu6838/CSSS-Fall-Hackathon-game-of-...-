@@ -63,24 +63,27 @@ int main(){
     string overpopulationLimitStr;
     string neighbourRadiusStr;
 
-    cout << "                        CSSS FALL HACKATHON - THE GAME OF ... - Implementation in C++" << endl;
+    cout << "                        CSSS FALL HACKATHON - THE GAME OF Os ... - Implementation in C++" << endl;
 	 // TODO:  write introduction and get rid of this one
     cout << endl;
     cout << endl;
     cout << endl;
-    cout << "We have the Game of ________" << endl;
+    cout << "This is the Game of Os!" << endl;
     cout << "Based on cellular automaton created by the British mathematician John Horton Conway in 1970." << endl;
     cout << endl<<endl;
-    cout << "The game consists of an infinite two-dimensional orthogonal grid of square cells, where each cell is either alive or dead." << endl;
-    cout << "Every cell interacts with its eight neighbours, which are the cells that are horizontally, vertically, or diagonally adjacent." <<endl<< endl;
+    cout << "This game contains an infinite two-dimensional orthogonal grid of square cells, where each cell is either alive or dead. Much like us, humans." << endl;
+    cout << "Every cell communicates with its eight neighbours, which are the cells that are horizontally, vertically, or diagonally adjacent. You could think of those neighbours as friends." <<endl<< endl;
     cout << "After each generation, the following transitions occur:" << endl;
-    cout << "1. Any live cell with fewer than two live neighbours dies, as if caused by under-population." << endl;
-    cout << "2. Any live cell with two or three live neighbours lives on to the next generation." << endl;
-    cout << "3. Any live cell with more than three live neighbours dies, as if by over-population." << endl;
-    cout << "4. Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction." << endl;
+    cout << "I. Any living cell which has less than two live neighbours dies. They were too lonely, they wanted more friends." << endl;
+    cout << "II. Any living cell which has two or three live neighbours lives on to the next generation. Yay, now they can make even more friends!" << endl;
+    cout << "III. Any living cell which has more than three live neighbours dies. Too many friends could be bad for their health too." << endl;
+    cout << "IV. Any dead cell with exactly three live neighbours becomes a live cell. Ooh they are resurrected from their death!" << endl;
     cout << endl;
+    cout << "Now this is just the default setting for this game. But if you want to be one of the cool kids and set your own number of alive and dead "friends/neighbours" a cell needs to die or regenerate, you are very much welcome to do so!"<<endl;
+    cout << "Life and death are represented in this game by the symbols: << endl;
     cout << "O - living cell" << endl;
     cout << ". - dead cell" << endl;
+    cout << endl;
     cout << endl;
     cout << "Enter the number of cells, or 'r' to read cells from file: ";
     cin >> nc;
