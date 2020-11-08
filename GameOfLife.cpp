@@ -221,7 +221,7 @@ int main(){
     for (int i = 0; i < gridRows; i++){
         delete[] gridOne[i];
     }
-    delete gridOne;    
+    delete[] gridOne;    
 }
 
 void clearScreen(void) {
@@ -367,5 +367,5 @@ void determineState(bool** gridOne, int gridRows, int gridCols, int starvationLi
     for (int i = 0; i < gridRows; i++){
         delete[] gridCopy[i];
     }
-    delete gridCopy;
+    delete[] gridCopy;
 }
