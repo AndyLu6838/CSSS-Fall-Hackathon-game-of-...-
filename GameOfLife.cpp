@@ -43,7 +43,7 @@ using namespace std;
 
 const int gridSize = 25;
 void printGrid(bool gridOne[gridSize][gridSize]);
-void determineState(bool gridOne[gridSize][gridSize], int starvationLimit, int overpopulationLimit, int neighbourRadius);
+void determineState(bool gridOne[gridSize][gridSize]);
 void clearScreen(void);
 
 
@@ -54,26 +54,19 @@ int main(){
     clearScreen();
     bool gridOne[gridSize][gridSize] = {};
     int x,y,n;
-    int starvationLimit, overpopulationLimit, neighbourRadius;
     string nc;
     string start;
-    string isCustomRules;
-    string starvationLimitStr;
-    string overpopulationLimitStr;
-    string neighbourRadiusStr;
     string filename;
-	
     cout << "                        CSSS FALL HACKATHON - THE GAME OF ... - Implementation in C++" << endl;
 	 // TODO:  write introduction and get rid of this one
     cout << endl;
     cout << endl;
     cout << endl;
-    cout << "Based on cellular automaton created by the British mathematician John Horton Conway in 1970." << endl;
-    cout << endl;
     cout << "We have the Game of ________" << endl;
+    cout << "Based on cellular automaton created by the British mathematician John Horton Conway in 1970." << endl;
+    cout << endl<<endl;
     cout << "The game consists of an infinite two-dimensional orthogonal grid of square cells, where each cell is either alive or dead." << endl;
-    cout << endl;
-    cout << "Every cell interacts with its eight neighbours, which are the cells that are horizontally, vertically, or diagonally adjacent." << endl;
+    cout << "Every cell interacts with its eight neighbours, which are the cells that are horizontally, vertically, or diagonally adjacent." <<endl<< endl;
     cout << "After each generation, the following transitions occur:" << endl;
     cout << "1. Any live cell with fewer than two live neighbours dies, as if caused by under-population." << endl;
     cout << "2. Any live cell with two or three live neighbours lives on to the next generation." << endl;
@@ -156,31 +149,9 @@ int main(){
 	    printGrid(gridOne);
 	  }
       }
+    cout << "Grid setup is done. Start the game ? (y/n)" << endl;
 	
-    cout << "Grid setup is done. Play with the default Game of Life rules? (y/n)" << endl;
-
-    cin >> isCustomRules;
-    if( isCustomRules == "y" || isCustomRules == "Y" )
-      {
-        starvationLimit = 2;
-        overpopulationLimit = 3;
-        neighbourRadius = 1;
-      }
-    else {
-      cout << "Choose starvation limit (integer)" << endl;
-      cin >> starvationLimitStr;
-      starvationLimit = stoi(starvationLimitStr);
-
-      cout << "Choose overpopulation limit (integer)" << endl;
-      cin >> overpopulationLimitStr;
-      overpopulationLimit = stoi(overpopulationLimitStr);
-
-      cout << "Choose neighbour radius (integer)" << endl;
-      cin >> neighbourRadiusStr;
-      neighbourRadius = stoi(neighbourRadiusStr);
-    }
-		
-    cout << "Rule configuration is done. Start the game ? (y/n)" << endl;
+	// TODO: let the player configure game parameters (that's what makes it the Game of ... rather than the Game of Life
 	
     printGrid(gridOne);
     cin >> start;
@@ -189,7 +160,7 @@ int main(){
         while (true)
 	  {
             printGrid(gridOne);
-            determineState(gridOne, starvationLimit, overpopulationLimit, neighbourRadius);
+            determineState(gridOne);
             usleep(200000);
             clearScreen();
 	  }
@@ -306,7 +277,7 @@ int liveNeighbours (bool gridOne[gridSize][gridSize], int i, int j){
 param:  gridOne, the boolean grid with the alive (true) and dead (false) cells 
 return: void, but modifies gridOne with trues and falses to simulate an iteration
 */
-void determineState(bool gridOne[gridSize][gridSize], int starvationLimit, int overpopulationLimit, int neighbourRadius){
+void determineState(bool gridOne[gridSize][gridSize]){
     bool gridCopy[gridSize][gridSize];
 
     // make an unchanged copy of gridOne so changes made to gridOne
@@ -325,13 +296,13 @@ void determineState(bool gridOne[gridSize][gridSize], int starvationLimit, int o
             Any cell with 3 live neighbours is alive.
             */
 
-            if (alive < starvationLimit){
+            if (alive < 2){
                 gridOne[i][j] = false;
             }
-            else if (alive > overpopulationLimit){
+            else if (alive > 3){
                 gridOne[i][j] = false;
             }
-            else if (alive == overpopulationLimit){
+            else if (alive == 3){
                 gridOne[i][j] = true;
             }
         }
