@@ -18,7 +18,9 @@ then go to directory containing the file and run
 
 `gcc GameOfLife.cpp -lstdc++` to compile and
 
-`/a.out` to start the game
+`/a.out` to start the game. 
+
+'testboard.txt' is a sample input file to get you started. 
 
 #### Windows
 
@@ -35,4 +37,7 @@ Use command prompt and go to the directory containing the file and run
 `gcc GameOfLife.cpp -o GameOfLife` 
 
 enter `GameOfLife` on the next line to compile and start the game
+
+'testboard.txt' is a sample input file to get you started. 
+
 
