@@ -161,7 +161,7 @@ int main(){
       {
         for(int i=0;i<stoi(nc);i++)
           {
-            cout <<stoi(nc)<< "Enter the coordinates of cell " << i+1 << " : ";
+            cout << "Enter the coordinates of cell " << i+1 << " : ";
             cin >> x >> y;
             gridOne[x][y] = true;
             printGrid(gridOne, gridRows, gridCols);
