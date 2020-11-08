@@ -1,4 +1,4 @@
-// Author: Mario Talevski
+// Original Author: Mario Talevski (operating system #defines kept, all other logic rewritten by SFU CSSS Fall Hackathon Hackers)
 #include <iostream>
 #include <cstdlib>
 #include <unistd.h>
