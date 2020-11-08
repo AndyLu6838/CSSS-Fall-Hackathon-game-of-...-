@@ -43,7 +43,7 @@ using namespace std;
 
 const int gridSize = 25;
 void printGrid(bool gridOne[gridSize][gridSize]);
-void determineState(bool gridOne[gridSize][gridSize]);
+void determineState(bool gridOne[gridSize][gridSize], int starvationLimit, int overpopulationLimit, int neighbourRadius);
 void clearScreen(void);
 
 
@@ -57,6 +57,12 @@ int main(){
     string nc;
     string start;
     string filename;
+    int starvationLimit, overpopulationLimit, neighbourRadius;
+    string isCustomRules;
+    string starvationLimitStr;
+    string overpopulationLimitStr;
+    string neighbourRadiusStr;
+
     cout << "                        CSSS FALL HACKATHON - THE GAME OF ... - Implementation in C++" << endl;
 	 // TODO:  write introduction and get rid of this one
     cout << endl;
@@ -87,24 +93,6 @@ int main(){
 	    
 	    cout << "Enter name of file to read from: "<<endl;
 	    cin  >> filename;
-		
-		/*
-		TODO: another potential improvement, right now the input file just specifies coordinates for the cells like
-			5 4
-			7 4
-			5 5
-			6 5
-			5 6
-
-		might be cooler for the input to be like
-			. . . . . 
-			. o . . . 
-			. o . . o
-			o . o . .
-			o o . . o
-
-		instead	
-		*/
 	    
 	    ifstream readfile(filename);
 	    if ( readfile.is_open() )
@@ -183,7 +171,7 @@ int main(){
         while (true)
 	  {
             printGrid(gridOne);
-            determineState(gridOne);
+            determineState(gridOne, starvationLimit, overpopulationLimit, neighbourRadius);
             usleep(200000);
             clearScreen();
 	  }
@@ -300,7 +288,7 @@ int liveNeighbours (bool gridOne[gridSize][gridSize], int i, int j){
 param:  gridOne, the boolean grid with the alive (true) and dead (false) cells 
 return: void, but modifies gridOne with trues and falses to simulate an iteration
 */
-void determineState(bool gridOne[gridSize][gridSize]){
+void determineState(bool gridOne[gridSize][gridSize], int starvationLimit, int overpopulationLimit, int neighbourRadius) {
     bool gridCopy[gridSize][gridSize];
 
     // make an unchanged copy of gridOne so changes made to gridOne
@@ -319,16 +307,15 @@ void determineState(bool gridOne[gridSize][gridSize]){
             Any cell with 3 live neighbours is alive.
             */
 
-            if (alive < 2){
+            if (alive < starvationLimit){
                 gridOne[i][j] = false;
             }
-            else if (alive > 3){
+            else if (alive > overpopulationLimit){
                 gridOne[i][j] = false;
             }
-            else if (alive == 3){
+            else if (alive == overpopulationLimit){
                 gridOne[i][j] = true;
             }
         }
     }
 }
-
