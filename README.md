@@ -1,6 +1,6 @@
 # Game of Os 
 
-![Screenshot](https://imgur.com/OcwlWcI)
+![Screenshot](https://i.imgur.com/OcwlWcI.png)
 
 *The Game of Os is based on The Game of Life, which is a cellular automaton devised by the British mathematician John Horton Conway in 1970. The progression of this game does not require any further input from the player/user other than the creation of its initial configuration. In our Game of Os, the user can themselves choose the number of neighbouring living and dead cells that determine the evolution of the initial cell.*
 
