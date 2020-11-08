@@ -325,13 +325,13 @@ void determineState(bool gridOne[gridSize][gridSize], int starvationLimit, int o
             Any cell with 3 live neighbours is alive.
             */
 
-            if (alive < 2){
+            if (alive < starvationLimit){
                 gridOne[i][j] = false;
             }
-            else if (alive > 3){
+            else if (alive > overpopulationLimit){
                 gridOne[i][j] = false;
             }
-            else if (alive == 3){
+            else if (alive == overpopulationLimit){
                 gridOne[i][j] = true;
             }
         }
