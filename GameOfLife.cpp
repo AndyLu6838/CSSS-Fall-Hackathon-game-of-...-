@@ -73,7 +73,7 @@ int main(){
     cout << "2. Any live cell with two or three live neighbours lives on to the next generation." << endl;
     cout << "3. Any live cell with more than three live neighbours dies, as if by over-population." << endl;
     cout << "4. Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction." << endl;
-    cout << endl << "We will denote the cells as following: << endl;
+    cout << endl << "We will denote the cells as following: "<< endl;
     cout << "O - living cell" << endl;
     cout << ". - dead cell" << endl;
     cout << endl;
