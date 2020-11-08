@@ -43,7 +43,7 @@ using namespace std;
 
 const int gridSize = 25;
 void printGrid(bool gridOne[gridSize][gridSize]);
-void determineState(bool gridOne[gridSize][gridSize], int starvationLimit, int overpopulationLimit, int neighbourRadius);
+void determineState(bool gridOne[gridSize][gridSize], int starvationLimit, int overpopulationLimit, int optimalPopulation, int neighbourRadius);
 void clearScreen(void);
 
 
@@ -57,14 +57,14 @@ int main(){
     string nc;
     string start;
     string filename;
-    int starvationLimit, overpopulationLimit, neighbourRadius;
+    int starvationLimit, overpopulationLimit, neighbourRadius, optimalPopulation;
     string isCustomRules;
     string starvationLimitStr;
     string overpopulationLimitStr;
     string neighbourRadiusStr;
+    string optimalPopulationStr;
 
     cout << "                        CSSS FALL HACKATHON - THE GAME OF Os ... - Implementation in C++" << endl;
-	 // TODO:  write introduction and get rid of this one
     cout << endl;
     cout << endl;
     cout << endl;
@@ -148,16 +148,21 @@ int main(){
       {
         starvationLimit = 2;
         overpopulationLimit = 3;
+        optimalPopulation = 3;
         neighbourRadius = 1;
       }
     else {
-      cout << "Choose starvation limit (integer)" << endl;
+      cout << "Choose starvation limit. if a live cell has fewer than this many neighbours it dies (integer)" << endl;
       cin >> starvationLimitStr;
       starvationLimit = stoi(starvationLimitStr);
 
-      cout << "Choose overpopulation limit (integer)" << endl;
+      cout << "Choose overpopulation limit. if a live cell has more than this many neighbours it dies (integer)" << endl;
       cin >> overpopulationLimitStr;
       overpopulationLimit = stoi(overpopulationLimitStr);
+
+      cout << "Choose optimal population. If a cell has exactly this many neighbours it is born (integer)" << endl;
+      cin >> optimalPopulationStr;
+      optimalPopulation = stoi(optimalPopulationStr);
 
       cout << "Choose neighbour radius (integer)" << endl;
       cin >> neighbourRadiusStr;
@@ -174,7 +179,7 @@ int main(){
         while (true)
 	  {
             printGrid(gridOne);
-            determineState(gridOne, starvationLimit, overpopulationLimit, neighbourRadius);
+            determineState(gridOne, starvationLimit, overpopulationLimit, optimalPopulation, neighbourRadius);
             usleep(200000);
             clearScreen();
 	  }
@@ -261,16 +266,16 @@ param:  gridOne, the boolean grid with the alive (true) and dead (false) cells
 return: the number of adjacent cells (including diagonal) to gridOne[i][j]
         that are alive (true).
 */
-int liveNeighbours (bool gridOne[gridSize][gridSize], int i, int j){
+int liveNeighbours (bool gridOne[gridSize][gridSize], int i, int j, int neighbourRadius){
     // count all trues from grid[i-1][j-1] to grid[i+1][j+1]
     int count = 0;
     
     // can change these bounds depending on 
     // how many neighbours you want to consider
-    int lower_bound_cols = i-1;
-    int upper_bound_cols = i+1;
-    int lower_bound_rows = j-1;
-    int upper_bound_rows = j+1;
+    int lower_bound_cols = i-neighbourRadius;
+    int upper_bound_cols = i+neighbourRadius;
+    int lower_bound_rows = j-neighbourRadius;
+    int upper_bound_rows = j+neighbourRadius;
 
     for (int a = lower_bound_cols; a <= upper_bound_cols; a++){
         for (int b = lower_bound_rows; b <= upper_bound_rows; b++){
@@ -291,7 +296,7 @@ int liveNeighbours (bool gridOne[gridSize][gridSize], int i, int j){
 param:  gridOne, the boolean grid with the alive (true) and dead (false) cells 
 return: void, but modifies gridOne with trues and falses to simulate an iteration
 */
-void determineState(bool gridOne[gridSize][gridSize], int starvationLimit, int overpopulationLimit, int neighbourRadius) {
+void determineState(bool gridOne[gridSize][gridSize], int starvationLimit, int overpopulationLimit, int optimalPopulation, int neighbourRadius) {
     bool gridCopy[gridSize][gridSize];
 
     // make an unchanged copy of gridOne so changes made to gridOne
@@ -300,7 +305,7 @@ void determineState(bool gridOne[gridSize][gridSize], int starvationLimit, int o
 
     for (int i = 0; i < gridSize; i++){
         for (int j = 0; j < gridSize; j++){
-            int alive = liveNeighbours(gridCopy, i, j);
+            int alive = liveNeighbours(gridCopy, i, j, neighbourRadius);
 
             // TODO: Make it so that these rules can be changed
             /* Rules:
@@ -316,7 +321,7 @@ void determineState(bool gridOne[gridSize][gridSize], int starvationLimit, int o
             else if (alive > overpopulationLimit){
                 gridOne[i][j] = false;
             }
-            else if (alive == overpopulationLimit){
+            else if (alive == optimalPopulation){
                 gridOne[i][j] = true;
             }
         }
