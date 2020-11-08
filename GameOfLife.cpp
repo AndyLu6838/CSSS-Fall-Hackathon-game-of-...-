@@ -54,9 +54,16 @@ int main(){
     clearScreen();
     bool gridOne[gridSize][gridSize] = {};
     int x,y,n;
+    int x,y,n;
+    int starvationLimit, overpopulationLimit, neighbourRadius;
     string nc;
     string start;
+    string isCustomRules;
+    string starvationLimitStr;
+    string overpopulationLimitStr;
+    string neighbourRadiusStr;
     string filename;
+
     cout << "                        CSSS FALL HACKATHON - THE GAME OF ... - Implementation in C++" << endl;
 	 // TODO:  write introduction and get rid of this one
     cout << endl;
@@ -151,9 +158,30 @@ int main(){
 	    printGrid(gridOne);
 	  }
       }
-    cout << "Grid setup is done. Start the game ? (y/n)" << endl;
-	
-	// TODO: let the player configure game parameters (that's what makes it the Game of ... rather than the Game of Life
+    cout << "Grid setup is done. Play with the default Game of Life rules? (y/n)" << endl;
+
+    cin >> isCustomRules;
+    if( isCustomRules == "y" || isCustomRules == "Y" )
+      {
+        starvationLimit = 2;
+        overpopulationLimit = 3;
+        neighbourRadius = 1;
+      }
+    else {
+      cout << "Choose starvation limit (integer)" << endl;
+      cin >> starvationLimitStr;
+      starvationLimit = stoi(starvationLimitStr);
+
+      cout << "Choose overpopulation limit (integer)" << endl;
+      cin >> overpopulationLimitStr;
+      overpopulationLimit = stoi(overpopulationLimitStr);
+
+      cout << "Choose neighbour radius (integer)" << endl;
+      cin >> neighbourRadiusStr;
+      neighbourRadius = stoi(neighbourRadiusStr);
+    }
+		
+    cout << "Rule configuration is done. Start the game ? (y/n)" << endl;
 	
     printGrid(gridOne);
     cin >> start;
@@ -298,13 +326,13 @@ void determineState(bool gridOne[gridSize][gridSize]){
             Any cell with 3 live neighbours is alive.
             */
 
-            if (alive < 2){
+            if (alive < starvationLimit){
                 gridOne[i][j] = false;
             }
-            else if (alive > 3){
+            else if (alive > overpopulationLimit){
                 gridOne[i][j] = false;
             }
-            else if (alive == 3){
+            else if (alive == overpopulationLimit){
                 gridOne[i][j] = true;
             }
         }
